@@ -4,11 +4,18 @@
 
 #ifndef PROJETOED_GEOMETRO_H
 #define PROJETOED_GEOMETRO_H
+typedef struct geometro {
+    char *id;
+    double *dimensoes;
+} TGEOMETRO;
 
+double calculaArea(TGEOMETRO *geometro);
 
-double calculaArea(void *geometro);
+void imprimeDetalhes(TGEOMETRO *geometro);
 
-void*  criaGeometro(char *id, double* lados);
+TGEOMETRO *criaGeometro(char *id, double *lados);
 
-void* criaGeometroPorString(char* str);
+TGEOMETRO *criaGeometroPorString(char *str);
+
+void mudaDimensoes(TGEOMETRO*geo, char* str_dimensoes);
 #endif //PROJETOED_GEOMETRO_H
