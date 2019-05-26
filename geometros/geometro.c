@@ -81,7 +81,7 @@ double *extraiLados(char *str, char delimiter) {
     double *result = malloc(sizeof(double) * 1);
     do {
         pos++;
-        if (str[pos] == delimiter || str[pos] == '\0') {
+        if (str[pos] == delimiter || str[pos] == '\0' || str[pos] == '\n') {
             char piece[pos - index];
             for (int i = 0; i < pos - index; ++i) {
                 piece[i] = str[i + index];

@@ -5,5 +5,5 @@ set(CMAKE_C_STANDARD 99)
 
 aux_source_directory(geometros GEO)
 aux_source_directory(arvores ARV)
-add_executable(ProjetoED main.c ${GEO} ${ARV})
+add_executable(ProjetoED main.c ${GEO} ${ARV} utils.h utils.c)
 target_link_libraries(ProjetoED m)

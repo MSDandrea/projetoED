@@ -45,10 +45,10 @@ void insere(TNARIA *arvore, int id_pai, int id, TGEOMETRO *geo) {
 void imprimeNo(TNO *no) {
     if(no==NULL)
         return;
-    printf("Id: %d Detalhes: ", no->id);
+    printf("Id: %d\n Detalhes: ", no->id);
     imprimeDetalhes(no->geometro);
     TNO *filho = no->filho;
-    printf("Filhos: ");
+    printf(" Filhos: ");
     if (filho != NULL) {
         printf("%d", filho->id);
         TNO *irmao = filho->irmao;
@@ -57,7 +57,7 @@ void imprimeNo(TNO *no) {
             irmao = irmao->irmao;
         }
     }
-    printf("\n");
+    printf("\n\n");
     if (no->irmao)
         imprimeNo(no->irmao);
     if (no->filho)
