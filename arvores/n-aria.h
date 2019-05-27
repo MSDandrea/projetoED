@@ -24,4 +24,6 @@ TNO *busca(TNARIA *arvore, int id);
 
 void imprime(TNARIA *arvore);
 
+void imprimeUnico(TNO* no);
+
 #endif //PROJETOED_N_ARIA_H

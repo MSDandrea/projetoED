@@ -90,7 +90,7 @@ double *extraiLados(char *str, char delimiter) {
             result = realloc(result, sizeof(double) * size);
             double lado = atof(piece);
             result[size - 1] = lado;
-            index = pos;
+            index = pos+1;
         }
     } while (str[pos] != '\0');
     return result;
@@ -133,7 +133,7 @@ void imprimeDetalhes(TGEOMETRO *geometro) {
 }
 
 void mudaDimensoes(TGEOMETRO *geo, char *str_dimensoes) {
-    double *dimensoes = extraiLados(str_dimensoes, ' ');
+    double *dimensoes = extraiLados(str_dimensoes, ';');
     free(geo->dimensoes);
     geo->dimensoes = dimensoes;
 }
