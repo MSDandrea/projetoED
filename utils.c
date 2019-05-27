@@ -20,5 +20,6 @@ TNARIA *criaDeArquivo(char *arquivo) {
             insere(result, parent, id, g);
         }
     }
+    fclose(file);
     return result;
 }
