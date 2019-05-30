@@ -7,6 +7,9 @@
 #include "n-aria.h"
 
 
+void delete(TNO *pNo, int id);
+
+
 TNARIA *incializa() {
     TNARIA *result = malloc(sizeof(TNO));
     result->raiz = NULL;
@@ -42,8 +45,8 @@ void insere(TNARIA *arvore, int id_pai, int id, TGEOMETRO *geo) {
     pai->filho = no;
 }
 
-void imprimeUnico(TNO* no){
-    if(no==NULL)
+void imprimeUnico(TNO *no) {
+    if (no == NULL)
         return;
     printf("Id: %d\n Detalhes: ", no->id);
     imprimeDetalhes(no->geometro);
@@ -70,4 +73,67 @@ void imprimeNo(TNO *no) {
 
 void imprime(TNARIA *arvore) {
     imprimeNo(arvore->raiz);
+}
+
+void freeNo(TNO *no) {
+    free(no->geometro);
+    free(no);
+}
+
+void limpaNo(TNO *no) {
+    if (no->irmao)
+        limpaNo(no->irmao);
+    if (no->filho)
+        limpaNo(no->filho);
+    freeNo(no);
+}
+
+void deleteNo(TNO *pai, TNO *no, int id) {
+    if (!no || !pai) return;
+    if (no->id == id) {
+        TNO *filho = no->filho;
+        TNO *irmao = no->irmao;
+        if (!irmao) {
+            pai->filho = filho;
+        } else {
+            pai->filho = irmao;
+            TNO *ir = irmao->irmao;
+            while (ir) {
+                irmao = ir;
+                ir = ir->irmao;
+            }
+            irmao->irmao = filho;
+        }
+        freeNo(no);
+        return;
+    }
+    TNO *ref = no;
+    TNO *irmao = no->irmao;
+    while (irmao) {
+        if (irmao->id == id) {
+            ref->irmao = irmao->irmao;
+            while (ref->irmao) ref = ref->irmao;
+            ref->irmao = irmao->filho;
+            freeNo(irmao);
+            break;
+        }
+        ref = irmao;
+        irmao = irmao->irmao;
+    }
+    if (no->irmao) deleteNo(no->irmao, no->irmao->filho, id);
+    deleteNo(no, no->filho, id);
+
+}
+
+void removeNo(TNARIA *arvore, int id) {
+    if (arvore->raiz && arvore->raiz->id == id)
+        return;
+    if (buscaNo(arvore->raiz, id))
+        deleteNo(arvore->raiz, arvore->raiz->filho, id);
+
+}
+
+void limpa(TNARIA *arvore) {
+    limpaNo(arvore->raiz);
+    free(arvore);
 }
