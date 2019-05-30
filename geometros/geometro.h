@@ -17,5 +17,8 @@ TGEOMETRO *criaGeometro(char *id, double *lados);
 
 TGEOMETRO *criaGeometroPorString(char *str);
 
-void mudaDimensoes(TGEOMETRO*geo, char* str_dimensoes);
+void freeGeo(TGEOMETRO *geo);
+
+void mudaDimensoes(TGEOMETRO *geo, char *str_dimensoes);
+
 #endif //PROJETOED_GEOMETRO_H

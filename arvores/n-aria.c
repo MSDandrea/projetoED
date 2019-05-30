@@ -7,9 +7,6 @@
 #include "n-aria.h"
 
 
-void delete(TNO *pNo, int id);
-
-
 TNARIA *incializa() {
     TNARIA *result = malloc(sizeof(TNO));
     result->raiz = NULL;
@@ -76,7 +73,7 @@ void imprime(TNARIA *arvore) {
 }
 
 void freeNo(TNO *no) {
-    free(no->geometro);
+    freeGeo(no->geometro);
     free(no);
 }
 

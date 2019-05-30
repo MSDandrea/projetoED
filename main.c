@@ -36,6 +36,7 @@ int main() {
                     printf("Entre as novas dimensoes separadas por ';'.\n");
                     scanf("%s", dim);
                     mudaDimensoes(noM->geometro, dim);
+                    free(dim);
                 }
                 break;
             case 4:

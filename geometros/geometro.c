@@ -73,7 +73,10 @@ TGEOMETRO *criaGeometro(char *id, double *lados) {
     }
 }
 
-
+void freeGeo(TGEOMETRO *geo){
+    free(geo->dimensoes);
+    free(geo);
+}
 double *extraiLados(char *str, char delimiter) {
     int pos = -1;
     int index = 0;
@@ -122,6 +125,7 @@ void detalhes(TGEOMETRO *geometro, char *str) {
         exit(1);
     }
     sprintf(str, "%s -> %s | area: %f", id, dim, calculaArea(geometro));
+    free(dim);
 }
 
 
@@ -130,6 +134,7 @@ void imprimeDetalhes(TGEOMETRO *geometro) {
     char *t = malloc(sizeof(char) * 100);
     detalhes(geometro, t);
     printf("%s\n", t);
+    free(t);
 }
 
 void mudaDimensoes(TGEOMETRO *geo, char *str_dimensoes) {

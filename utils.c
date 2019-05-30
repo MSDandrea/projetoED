@@ -17,6 +17,7 @@ TNARIA *criaDeArquivo(char *arquivo) {
             char *geo = malloc(sizeof(char) * 250);
             sscanf(line, "%d/%d/%[^\\n]", &id, &parent, geo);
             TGEOMETRO *g = criaGeometroPorString(geo);
+            free(geo);
             insere(result, parent, id, g);
         }
     }
