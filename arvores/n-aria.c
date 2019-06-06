@@ -7,6 +7,8 @@
 #include "n-aria.h"
 
 
+
+
 TNARIA *incializa() {
     TNARIA *result = malloc(sizeof(TNO));
     result->raiz = NULL;
@@ -133,4 +135,23 @@ void removeNo(TNARIA *arvore, int id) {
 void limpa(TNARIA *arvore) {
     limpaNo(arvore->raiz);
     free(arvore);
+}
+
+AVno *transformaNo(TNO *no, AVno *arvore) {
+    if (!no) return NULL;
+    if (no->filho)
+        arvore = transformaNo(no->filho, arvore);
+    arvore = insere_avl(no->id, no->geometro, arvore);
+    if (no->irmao)
+        arvore = transformaNo(no->irmao, arvore);
+    return arvore;
+}
+
+AVno *transformaAVL(TNARIA *arvore) {
+    AVno *raiz = NULL;
+    raiz = transformaNo(arvore->raiz, raiz);
+    imprimeAVL(raiz);
+    liberaAVL(raiz);
+    return raiz;
+
 }

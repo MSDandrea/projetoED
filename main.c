@@ -6,6 +6,7 @@ const char *menu = "1 - Imprime\n"
                    "2 - Busca\n"
                    "3 - Modifica\n"
                    "4 - Remove\n"
+                   "6 - Transforma em AVL\n"
                    "9 - Sair\n";
 
 int main() {
@@ -43,6 +44,9 @@ int main() {
                 printf("Qual id?\n");
                 scanf("%d", &id);
                 removeNo(arv, id);
+                break;
+            case 6:
+                transformaAVL(arv);
                 break;
             case 9:
                 limpa(arv);

@@ -2,14 +2,15 @@
 // Created by matheus on 24/05/19.
 //
 #include "../geometros/geometro.h"
+#include "avl.h"
 
 #ifndef PROJETOED_N_ARIA_H
 #define PROJETOED_N_ARIA_H
-typedef struct no {
+typedef struct Gno {
     TGEOMETRO *geometro;
     int id;
-    struct no *filho;
-    struct no *irmao;
+    struct Gno  *filho;
+    struct Gno  *irmao;
 } TNO;
 
 typedef struct naria {
@@ -29,5 +30,7 @@ void imprime(TNARIA *arvore);
 void imprimeUnico(TNO *no);
 
 void limpa(TNARIA *arvore);
+
+AVno *transformaAVL(TNARIA *arvore);
 
 #endif //PROJETOED_N_ARIA_H
