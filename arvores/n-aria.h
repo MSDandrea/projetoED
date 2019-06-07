@@ -3,14 +3,15 @@
 //
 #include "../geometros/geometro.h"
 #include "avl.h"
+#include "b.h"
 
 #ifndef PROJETOED_N_ARIA_H
 #define PROJETOED_N_ARIA_H
 typedef struct Gno {
     TGEOMETRO *geometro;
     int id;
-    struct Gno  *filho;
-    struct Gno  *irmao;
+    struct Gno *filho;
+    struct Gno *irmao;
 } TNO;
 
 typedef struct naria {
@@ -31,6 +32,8 @@ void imprimeUnico(TNO *no);
 
 void limpa(TNARIA *arvore);
 
-AVno *transformaAVL(TNARIA *arvore);
+void transformaAVL(TNARIA *arvore);
+
+void transformaB(TNARIA *arvore, int ordem);
 
 #endif //PROJETOED_N_ARIA_H

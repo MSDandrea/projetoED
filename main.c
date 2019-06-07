@@ -8,6 +8,7 @@ const char *menu = "1 - Imprime\n"
                    "4 - Remove\n"
                    "5 - Adiciona\n"
                    "6 - Transforma em AVL\n"
+                   "7 - Transforma em B\n"
                    "9 - Sair\n";
 
 int main() {
@@ -67,6 +68,9 @@ int main() {
                 break;
             case 6:
                 transformaAVL(arv);
+                break;
+            case 7:
+                transformaB(arv,2);
                 break;
             case 9:
                 limpa(arv);

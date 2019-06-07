@@ -7,8 +7,6 @@
 #include "n-aria.h"
 
 
-
-
 TNARIA *incializa() {
     TNARIA *result = malloc(sizeof(TNO));
     result->raiz = NULL;
@@ -55,11 +53,32 @@ void imprimeUnico(TNO *no) {
         printf("%d", filho->id);
         TNO *irmao = filho->irmao;
         while (irmao != NULL) {
-            printf(" %d", irmao->id);
+            printf(" %i", irmao->id);
             irmao = irmao->irmao;
         }
     }
     printf("\n\n");
+}
+
+
+void imprimeEst(TNO *a, int andar) {
+    if (a) {
+        TNO *irmao = a->irmao;
+        if (irmao) {
+            imprimeEst(irmao, andar);
+        }
+
+        for (int j = 1; j < andar; j++) printf("|");
+        if (andar > 0)
+            printf("├");
+
+        printf("%d\n", a->id);
+
+        if (a->filho) {
+            imprimeEst(a->filho, andar + 1);
+        }
+
+    }
 }
 
 void imprimeNo(TNO *no) {
@@ -71,6 +90,7 @@ void imprimeNo(TNO *no) {
 }
 
 void imprime(TNARIA *arvore) {
+    imprimeEst(arvore->raiz, 0);
     imprimeNo(arvore->raiz);
 }
 
@@ -137,21 +157,39 @@ void limpa(TNARIA *arvore) {
     free(arvore);
 }
 
-AVno *transformaNo(TNO *no, AVno *arvore) {
+AVno *transformaNoAVL(TNO *no, AVno *arvore) {
     if (!no) return NULL;
     if (no->filho)
-        arvore = transformaNo(no->filho, arvore);
+        arvore = transformaNoAVL(no->filho, arvore);
     arvore = insere_avl(no->id, no->geometro, arvore);
     if (no->irmao)
-        arvore = transformaNo(no->irmao, arvore);
+        arvore = transformaNoAVL(no->irmao, arvore);
     return arvore;
 }
 
-AVno *transformaAVL(TNARIA *arvore) {
+void transformaAVL(TNARIA *arvore) {
     AVno *raiz = NULL;
-    raiz = transformaNo(arvore->raiz, raiz);
+    raiz = transformaNoAVL(arvore->raiz, raiz);
     imprimeAVL(raiz);
     liberaAVL(raiz);
-    return raiz;
+}
+
+TAB *transformaNoB(TNO *no, TAB *arvoreB, int ordem) {
+    if (!no)
+        return NULL;
+    if (no->filho)
+        arvoreB = transformaNoB(no->filho, arvoreB, ordem);
+    arvoreB = Insere(arvoreB, no->id, no->geometro, ordem);
+    if (no->irmao)
+        arvoreB = transformaNoB(no->irmao, arvoreB, ordem);
+    return arvoreB;
 
 }
+
+void transformaB(TNARIA *arvore, int ordem) {
+    TAB *raiz = Inicializa();
+    raiz = transformaNoB(arvore->raiz, raiz, ordem);
+    imprimeB(raiz);
+    Liberatab(raiz);
+}
+

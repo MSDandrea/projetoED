@@ -85,6 +85,17 @@ AVno *insere_avl(int e, TGEOMETRO *geo, AVno *t) {
     return t;
 }
 
+
+void imprime_est(AVno *a, int andar){
+    if(a){
+        int j;
+        imprime_est(a->esq,andar+1);
+        for(j=0; j<=andar; j++) printf("   ");
+        printf("%d\n", a->id);
+        imprime_est(a->dir,andar+1);
+    }
+}
+
 void imprime_aux(AVno *a) {
     if (a) {
         printf("Id: %d\n Detalhes: ", a->id);
@@ -102,5 +113,6 @@ void imprime_aux(AVno *a) {
 
 
 void imprimeAVL(AVno *a) {
+    imprime_est(a,0);
     imprime_aux(a);
 }
