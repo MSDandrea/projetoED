@@ -7,7 +7,7 @@
 #include <stdlib.h>
 
 
-void imprimeRec(const TAB *T);
+void imprimeRec(TAB *T);
 
 TAB *Cria(int t) {
     TAB *novo = (TAB *) malloc(sizeof(TAB));
@@ -17,7 +17,7 @@ TAB *Cria(int t) {
     novo->filho = (TAB **) malloc(sizeof(TAB *) * t * 2);
     int i;
     for (i = 0; i < (t * 2); i++) novo->filho[i] = NULL;
-    for (i = 0; i < (t * 2); i++) novo->chave[i] = NULL;
+    for (i = 0; i < (t * 2) - 1; i++) novo->chave[i] = NULL;
     return novo;
 }
 
@@ -28,7 +28,9 @@ void Liberatab(TAB *a) {
             int i;
             for (i = 0; i <= a->nchaves; i++) Liberatab(a->filho[i]);
         }
-        for (int i = 0; i <= a->nchaves; i++) free(a->chave[i]);
+        for (int i = 0; i < a->nchaves; i++) free(a->chave[i]);
+        free(a->filho);
+        free(a->chave);
         free(a);
     }
 }
@@ -134,6 +136,8 @@ void imprimeEstrutura(TAB *a, int andar) {
             for (j = 0; j <= andar; j++) printf("   ");
             printf("%d\n", a->chave[i]->id);
         }
+        for (j = 0; j <= andar; j++) printf("   ");
+        printf("¯\n");
         imprimeEstrutura(a->filho[i], andar + 1);
     }
 }
@@ -143,8 +147,8 @@ void imprimeB(TAB *T) {
     imprimeRec(T);
 }
 
-void imprimeRec(const TAB *T) {
-    if (!T)
+void imprimeRec(TAB *T) {
+    if (!T || !T->chave)
         return;
     printf("Chaves: \n");
     for (int i = 0; i < T->nchaves; ++i) {
@@ -152,7 +156,8 @@ void imprimeRec(const TAB *T) {
         imprimeDetalhes(T->chave[i]->geo);
         printf("\n\n");
     }
-    for (int j = 0; T->filho[j]; ++j) {
-        imprimeRec(T->filho[j]);
+    for (int j = 0; j <= T->nchaves; ++j) {
+        if (T->filho[j])
+            imprimeRec(T->filho[j]);
     }
 }

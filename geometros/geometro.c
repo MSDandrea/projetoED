@@ -73,10 +73,11 @@ TGEOMETRO *criaGeometro(char *id, double *lados) {
     }
 }
 
-void freeGeo(TGEOMETRO *geo){
+void freeGeo(TGEOMETRO *geo) {
     free(geo->dimensoes);
     free(geo);
 }
+
 double *extraiLados(char *str, char delimiter) {
     int pos = -1;
     int index = 0;
@@ -85,15 +86,16 @@ double *extraiLados(char *str, char delimiter) {
     do {
         pos++;
         if (str[pos] == delimiter || str[pos] == '\0' || str[pos] == '\n') {
-            char piece[pos - index];
+            char piece[(pos - index)+1];
+            piece[(pos - index)] = '\0';
             for (int i = 0; i < pos - index; ++i) {
                 piece[i] = str[i + index];
             }
             size++;
             result = realloc(result, sizeof(double) * size);
-            double lado = atof(piece);
+            double lado= strtol(piece, NULL, 10);
             result[size - 1] = lado;
-            index = pos+1;
+            index = pos + 1;
         }
     } while (str[pos] != '\0');
     return result;
@@ -108,18 +110,18 @@ TGEOMETRO *criaGeometroPorString(char *str) {
 
 void detalhes(TGEOMETRO *geometro, char *str) {
     char *id = geometro->id;
-    char *dim = malloc(sizeof(char)* 80);
+    char *dim = malloc(sizeof(char) * 80);
     if (strcmp(id, "QUA") == 0) {
         sprintf(dim, "lado: %f", geometro->dimensoes[0]);
     } else if (strcmp(id, "CIR") == 0) {
-        sprintf(dim,  "raio: %f", geometro->dimensoes[0]);
+        sprintf(dim, "raio: %f", geometro->dimensoes[0]);
     } else if (strcmp(id, "TRI") == 0) {
-        sprintf(dim,  "base: %f | altura: %f", geometro->dimensoes[0], geometro->dimensoes[1]);
+        sprintf(dim, "base: %f | altura: %f", geometro->dimensoes[0], geometro->dimensoes[1]);
     } else if (strcmp(id, "RET") == 0) {
-        sprintf(dim,  "base: %f | altura: %f", geometro->dimensoes[0], geometro->dimensoes[1]);
+        sprintf(dim, "base: %f | altura: %f", geometro->dimensoes[0], geometro->dimensoes[1]);
     } else if (strcmp(id, "TRA") == 0) {
-        sprintf(dim,  "base menor: %f | base maior: %f | altura: %f", geometro->dimensoes[0],
-                 geometro->dimensoes[1], geometro->dimensoes[2]);
+        sprintf(dim, "base menor: %f | base maior: %f | altura: %f", geometro->dimensoes[0],
+                geometro->dimensoes[1], geometro->dimensoes[2]);
     } else {
         printf("Geômetro desconhecido %s", id);
         exit(1);
@@ -127,7 +129,6 @@ void detalhes(TGEOMETRO *geometro, char *str) {
     sprintf(str, "%s -> %s | area: %f", id, dim, calculaArea(geometro));
     free(dim);
 }
-
 
 
 void imprimeDetalhes(TGEOMETRO *geometro) {

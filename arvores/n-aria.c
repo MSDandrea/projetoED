@@ -38,6 +38,10 @@ void insere(TNARIA *arvore, int id_pai, int id, TGEOMETRO *geo) {
         return;
     }
     TNO *pai = buscaNo(arvore->raiz, id_pai);
+    if (!pai) {
+        free(no);
+        return;
+    }
     no->irmao = pai->filho;
     pai->filho = no;
 }
@@ -135,13 +139,13 @@ void deleteNo(TNO *pai, TNO *no, int id) {
             ref->irmao = irmao->filho;
             freeNo(irmao);
             break;
+        } else {
+            deleteNo(irmao, irmao->filho, id);
         }
         ref = irmao;
         irmao = irmao->irmao;
     }
-    if (no->irmao) deleteNo(no->irmao, no->irmao->filho, id);
     deleteNo(no, no->filho, id);
-
 }
 
 void removeNo(TNARIA *arvore, int id) {

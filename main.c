@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <memory.h>
 #include "utils.h"
 
 const char *menu = "1 - Imprime\n"
@@ -11,8 +12,12 @@ const char *menu = "1 - Imprime\n"
                    "7 - Transforma em B\n"
                    "9 - Sair\n";
 
-int main() {
-    TNARIA *arv = criaDeArquivo("./exemplo-AG.txt");
+int main(int argc, char **argv) {
+    if (argc <2){
+        printf("Informe um arquivo \n");
+        return -1;
+    }
+    TNARIA *arv = criaDeArquivo(argv[1]);
     int input = 0;
     while (input != 9) {
         printf(menu);
@@ -53,24 +58,29 @@ int main() {
                 char *g = malloc(sizeof(char) * 4);
                 printf("Qual geometro?\n");
                 scanf("%s", g);
-                double* faux = malloc(sizeof(double)*1);
-                TGEOMETRO* geo = criaGeometro(g,faux);
+                if ((strcmp(g, "QUA") != 0) && (strcmp(g, "TRI") != 0) && (strcmp(g, "TRA") != 0) &&
+                    (strcmp(g, "CIR") != 0) && (strcmp(g, "RET") != 0)) {
+                    printf("Geometro desconhecido\n");
+                    break;
+                }
+                double *faux = malloc(sizeof(double) * 1);
+                TGEOMETRO *geo = criaGeometro(g, faux);
                 free(g);
                 char *dim = malloc(sizeof(char) * 250);
                 printf("Entre as novas dimensoes separadas por ';'.\n");
                 scanf("%s", dim);
                 mudaDimensoes(geo, dim);
                 free(dim);
-                int pai=0;
+                int pai = 0;
                 printf("Qual o pai?\n");
                 scanf("%d", &pai);
-                insere(arv,pai,id,geo);
+                insere(arv, pai, id, geo);
                 break;
             case 6:
                 transformaAVL(arv);
                 break;
             case 7:
-                transformaB(arv,2);
+                transformaB(arv, 2);
                 break;
             case 9:
                 limpa(arv);
