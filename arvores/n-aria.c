@@ -28,12 +28,20 @@ TNO *busca(TNARIA *arvore, int id) {
 
 
 void insere(TNARIA *arvore, int id_pai, int id, TGEOMETRO *geo) {
+    if (buscaNo(arvore->raiz, id)) {
+        printf("Esse nó já existe\n");
+        return;
+    }
+    if (id == 0) {
+        printf("Id inválido\n");
+        return;
+    }
     TNO *no = malloc(sizeof(TNO));
     no->id = id;
     no->geometro = geo;
     no->filho = NULL;
     no->irmao = NULL;
-    if (id_pai == 0) {
+    if (id_pai == 0 && !arvore->raiz) {
         arvore->raiz = no;
         return;
     }
@@ -149,8 +157,10 @@ void deleteNo(TNO *pai, TNO *no, int id) {
 }
 
 void removeNo(TNARIA *arvore, int id) {
-    if (arvore->raiz && arvore->raiz->id == id)
+    if (arvore->raiz && arvore->raiz->id == id) {
+        printf("Não se pode remover a raiz\n");
         return;
+    }
     if (buscaNo(arvore->raiz, id))
         deleteNo(arvore->raiz, arvore->raiz->filho, id);
 
